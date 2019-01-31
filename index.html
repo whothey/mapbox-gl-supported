@@ -27,8 +27,25 @@
     <h2 class='fancy center'>Mapbox GL JS is</h2>
     <h1 class='fancy center'>...</h1>
 
+    <ul id="supportList"></ul>
+
+    <pre id="dumps"></pre>
+
     <script src='index.js'></script>
     <script>
+        function reduceTruthyness(obj) {
+          return Object.keys(obj).reduce(function(carrier, k) {
+            carrier[k] = !!obj[k];
+            return carrier;
+          }, {});
+        }
+
+        var supportedFunctions = Object
+            .getOwnPropertyNames(window)
+            .filter(x => /is\w*Supported/i.test(x));
+
+        var dumpsElement = document.getElementById('dumps');
+        var supportList = document.getElementById('supportList');
         var bodyElement = document.body;
         var h1Element = document.getElementsByTagName('h1')[0];
 
@@ -42,6 +59,21 @@
             h1Element.innerHTML = 'not supported';
             bodyElement.className = 'fill-red';
         }
+
+        supportedFunctions.map(function(f) {
+          var el = document.createElement('li');
+
+          el.innerHTML = f;
+          el.className = typeof window[f] === 'function' && window[f].call(undefined) ? 'fill-green' : 'fill-red';
+
+          supportList.appendChild(el);
+        });
+
+        console.log(arrayValidations, objectValidations);
+
+        dumpsElement.innerHTML = JSON.stringify(reduceTruthyness(arrayValidations))
+          + '\n' +
+          JSON.stringify(reduceTruthyness(objectValidations));
     </script>
 </body>
 

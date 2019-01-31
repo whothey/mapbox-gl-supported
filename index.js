@@ -33,42 +33,46 @@ function isBrowser() {
     return typeof window !== 'undefined' && typeof document !== 'undefined';
 }
 
+var arrayValidations = {
+  'Array.prototype': Array.prototype,
+  'Array.prototype.every': Array.prototype.every,
+  'Array.prototype.filter': Array.prototype.filter,
+  'Array.prototype.forEach': Array.prototype.forEach,
+  'Array.prototype.indexOf': Array.prototype.indexOf,
+  'Array.prototype.lastIndexOf': Array.prototype.lastIndexOf,
+  'Array.prototype.map': Array.prototype.map,
+  'Array.prototype.some': Array.prototype.some,
+  'Array.prototype.reduce': Array.prototype.reduce,
+  'Array.prototype.reduceRight': Array.prototype.reduceRight,
+  'Array.isArray': Array.isArray
+};
+
 function isArraySupported() {
-    return (
-        Array.prototype &&
-        Array.prototype.every &&
-        Array.prototype.filter &&
-        Array.prototype.forEach &&
-        Array.prototype.indexOf &&
-        Array.prototype.lastIndexOf &&
-        Array.prototype.map &&
-        Array.prototype.some &&
-        Array.prototype.reduce &&
-        Array.prototype.reduceRight &&
-        Array.isArray
-    );
+  return Object.keys(arrayValidations).every(x => !!arrayValidations[x]);
 }
 
 function isFunctionSupported() {
     return Function.prototype && Function.prototype.bind;
 }
 
+var objectValidations = {
+  'Object.keys': Object.keys,
+  'Object.create': Object.create,
+  'Object.getPrototypeOf': Object.getPrototypeOf,
+  'Object.getOwnPropertyNames': Object.getOwnPropertyNames,
+  'Object.isSealed': Object.isSealed,
+  'Object.isFrozen': Object.isFrozen,
+  'Object.isExtensible': Object.isExtensible,
+  'Object.getOwnPropertyDescriptor': Object.getOwnPropertyDescriptor,
+  'Object.defineProperty': Object.defineProperty,
+  'Object.defineProperties': Object.defineProperties,
+  'Object.seal': Object.seal,
+  'Object.freeze': Object.freeze,
+  'Object.preventExtension': Object.preventExtensions
+};
+
 function isObjectSupported() {
-    return (
-        Object.keys &&
-        Object.create &&
-        Object.getPrototypeOf &&
-        Object.getOwnPropertyNames &&
-        Object.isSealed &&
-        Object.isFrozen &&
-        Object.isExtensible &&
-        Object.getOwnPropertyDescriptor &&
-        Object.defineProperty &&
-        Object.defineProperties &&
-        Object.seal &&
-        Object.freeze &&
-        Object.preventExtensions
-    );
+  return Object.keys(objectValidations).every(x => !!objectValidations[x]);
 }
 
 function isJSONSupported() {
